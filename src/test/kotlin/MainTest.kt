@@ -19,6 +19,8 @@ Testes Unitários
         -> Ferramenta útil para regressão
 */
 class MainTest {
+    var mainClass = Main()
+
     @Test
     @DisplayName("Teste do metodo -> ContagemDeLetrasXO")
     @Disabled // -> É utilizado para desativar o teste
@@ -29,13 +31,61 @@ class MainTest {
         * do problema, deve-se usar o Assertions.assertAll({})
         */
         Assertions.assertAll(
-            { Assertions.assertTrue(contagemDeLetrasXO("xxoo")) },
-            { Assertions.assertTrue(contagemDeLetrasXO("xxooox")) }
+            { Assertions.assertTrue(mainClass.contagemDeLetrasXO("xxoo")) },
+            { Assertions.assertTrue(mainClass.contagemDeLetrasXO("xxooox")) }
         )
     }
 
     @Test
+    @Disabled
     fun falhar() {
         DefaultAsserter.fail("Não posso terminar essa classe sem finalizar os testes. -> exemplo")
+    }
+
+    @Test
+    @DisplayName("Teste Portaria")
+    fun testeVerificarInformacoesNaPortaria() {
+        Assertions.assertAll({
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    15, "", ""
+                ), "Negado"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    20, "", ""
+                ), "Negado"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "VIP", ""
+                ), "Negado"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "comum", "xt45696"
+                ), "Welcome"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "COMUM", "xt45696"
+                ), "Welcome"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "comum", "86963512"
+                ), "Negado"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "premium", "xl86963512"
+                ), "Welcome"
+            )
+            Assertions.assertEquals(
+                mainClass.verificarInformacoesNaPortaria(
+                    25, "luxo", "XL86963512"
+                ), "Welcome"
+            )
+        })
     }
 }
